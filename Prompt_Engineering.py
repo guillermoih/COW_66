@@ -46,7 +46,7 @@ def generate_caption(img):
     return BLIP_PROCCESOR.decode(out[0], skip_special_tokens=True)
 
 
-# ## Sentence similarity with DistilBERT
+# # Sentence similarity with DistilBERT
 
 # +
 API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/msmarco-distilbert-base-tas-b"
@@ -72,16 +72,20 @@ def sentence_similarity(input_sentence, sentences):
     return data
 
 
+# # Generating original batch of images
+
 prompt = "Hello Kitty in the space riding a bicycle"
 images = STABLE_DIFF_PIPELINE(prompt=prompt, num_images_per_prompt=5,
                              output_type='pil').images
+
+# # Calculate caption and distance similarities
 
 # +
 captions = []
 for i, img in enumerate(images):
     img.save("test_" + str(i) + ".jpg")
     
-    print("Processing mage", i)
+    print("Processing image", i)
     caption = generate_caption(img)
     print("Generated caption:", caption)
     captions.append(caption)
